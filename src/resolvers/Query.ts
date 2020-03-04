@@ -1,5 +1,6 @@
 import { Context } from 'graphql-yoga/dist/types'
 import { fwd_geocode, rev_geocode } from '../util/here'
+import { set_cookie } from '../util/auth'
 
 export const Query = {
   //
@@ -10,6 +11,7 @@ export const Query = {
   async me (parent: any, args: any, context: Context) {
     const id = context.request.user_id
     console.log(id)
+    set_cookie(context, id)
     return context.prisma.user({ id })
   },
 
@@ -24,6 +26,7 @@ export const Query = {
     if (user.id !== userId) {
       throw new Error('Cannot read the trips of other users')
     }
+    set_cookie(context, userId)
     return trip
   },
 
@@ -37,6 +40,7 @@ export const Query = {
     if (!userId) {
       throw new Error('Must be authenticated to perform geocoding')
     }
+    set_cookie(context, userId)
     return fwd_geocode(args.query)
   },
 
@@ -46,6 +50,7 @@ export const Query = {
     if (!userId) {
       throw new Error('Must be authenticated to perform geocoding')
     }
+    set_cookie(context, userId)
     return rev_geocode(args.lat, args.lon)
   }
 }

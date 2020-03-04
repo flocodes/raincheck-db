@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { Context } from 'graphql-yoga/dist/types'
-
-import { set_cookie } from '../util/auth'
+import { set_cookie, remove_cookie } from '../util/auth'
 
 export const Mutation = {
 
@@ -25,14 +24,21 @@ export const Mutation = {
     return { user }
   },
 
+  async logout (parent: any, args: any, context: Context) {
+    remove_cookie(context)
+    return true
+  },
+
   async createTrip (parent: any, args: any, context: Context) {
     args.user = { connect: { id: context.request.user_id } }
+    set_cookie(context, context.request.user_id)
     return context.prisma.createTrip(args)
   },
 
   async updateTrip (parent: any, args: any, context: Context) {
     const id = args.id
     delete args.id
+    set_cookie(context, context.request.user_id)
     return context.prisma.updateTrip({ data: args, where: { id } })
   },
 
@@ -48,6 +54,7 @@ export const Mutation = {
     if (user.id !== user_id) {
       throw new Error('Cannot delete other users\' trips')
     }
+    set_cookie(context, user_id)
     return context.prisma.deleteTrip({ id: args.id })
   }
 }

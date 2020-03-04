@@ -9,19 +9,16 @@
     "prisma-update": "prisma deploy -e .env",
     "prisma-generate": "prisma generate",
     "start": "ts-node src/index.ts",
-    "start-dev": "nodemon --watch src/**/*.ts --exec yarn start"
+    "start-dev": "nodemon --watch src -e ts --exec yarn start"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
-    "@types/passport": "^1.0.2",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
-    "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
     "prisma-client-lib": "^1.34.10"
   },
   "devDependencies": {
