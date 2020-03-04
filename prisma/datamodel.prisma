@@ -1,0 +1,23 @@
+type User {
+  id: ID! @id
+  email: String! @unique
+  password: String!
+  trips: [Trip!]!
+}
+
+type Trip {
+  id: ID! @id
+  user: User!
+  name: String
+  enabled: Boolean!
+  notify_at: DateTime!
+  """ trip time & location """
+  start: DateTime!
+  end: DateTime!
+  from_lat: Float!
+  from_lon: Float!
+  to_lat: Float!
+  to_lon: Float!
+  """ forecast """
+  forecast: Json
+}

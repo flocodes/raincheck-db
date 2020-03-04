@@ -1,0 +1,73 @@
+scalar DateTime
+
+type Query {
+    me: User
+    trip(id: ID!): Trip
+    geocode(query: String!): [Location!]
+    rgeocode(lat: Float!, lon: Float!): Location
+}
+
+type Mutation {
+    signup(email: String!, password: String!): AuthPayload!
+    login(email: String!, password: String!): AuthPayload!
+    createTrip(
+        enabled: Boolean!
+        start: DateTime!
+        end: DateTime!
+        name: String!
+        from_lat: Float!
+        from_lon: Float!
+        to_lat: Float!
+        to_lon: Float!
+        notify_at: DateTime!
+        ): Trip!
+    updateTrip(
+        id: ID!
+        enabled: Boolean
+        start: DateTime
+        end: DateTime
+        name: String
+        from_lat: Float
+        from_lon: Float
+        to_lat: Float
+        to_lon: Float
+        notify_at: DateTime
+    ): Trip!
+    deleteTrip(id: ID!): Trip!
+}
+
+type AuthPayload {
+    user: User!
+    expiration: DateTime!
+}
+
+type User {
+    id: ID!
+    email: String!
+    password: String!
+    trips: [Trip!]!
+}
+
+type Trip {
+    id: ID!
+    user: User!
+    enabled: Boolean!
+    name: String!
+    start: DateTime!
+    end: DateTime!
+    from_lat: Float!
+    from_lon: Float!
+    to_lat: Float!
+    to_lon: Float!
+    notify_at: DateTime!
+}
+
+type Location {
+    lat: Float!
+    lon: Float!
+    label: String
+    number: Int
+    street: String
+    city: String
+    country: String
+}
