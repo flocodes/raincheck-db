@@ -9,7 +9,8 @@
     "prisma-update": "prisma deploy -e .env",
     "prisma-generate": "prisma generate",
     "start": "ts-node src/index.ts",
-    "start-dev": "nodemon --watch src -e ts --exec yarn start"
+    "start-dev": "nodemon --watch src -e ts --exec yarn start",
+    "lint": "eslint src/**"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",

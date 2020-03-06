@@ -19,7 +19,6 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'camelcase': 'off',
     'comma-dangle': 'off',
     'max-len': ['warn', {'code': 150}],
     'no-multiple-empty-lines': ['warn', {'max': 2}],
@@ -30,5 +29,6 @@ module.exports = {
       'argsIgnorePattern': '^_',
       'varsIgnorePattern': '^_',
     }],
-  }
+  },
+  ignorePatterns: ['src/generated/**', 'schema.graphql']
 }

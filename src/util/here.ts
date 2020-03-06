@@ -17,7 +17,7 @@ interface Location {
 
 // Perform forward geocoding for the provided query using HERE Maps
 // Only retrieve one result, return null if geocoding is unsuccessful
-export async function fwd_geocode (query: string) {
+export async function fwdGeocode (query: string) {
   try {
     const response = await axios.get(
       'https://geocoder.ls.hereapi.com/6.2/geocode.json', {
@@ -43,7 +43,7 @@ export async function fwd_geocode (query: string) {
       return null
     }
     console.log(`Found ${results.length} results for query ${query}`)
-    return results.map((result: any) => extract_details(result))
+    return results.map((result: any) => extractDetails(result))
   } catch (error) {
     console.log(`Could not geocode "${query}": ${error}`)
     return null
@@ -52,7 +52,7 @@ export async function fwd_geocode (query: string) {
 
 // Perform reverse geocoding for the provided latitude and longitude using HERE Maps
 // Only retrieve one result, return null if geocoding is unsuccessful
-export async function rev_geocode (lat: number, lon: number) {
+export async function revGeocode (lat: number, lon: number) {
   try {
     const response = await axios.get(
       'https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json', {
@@ -76,14 +76,14 @@ export async function rev_geocode (lat: number, lon: number) {
     }
     console.log(`Found ${results.length} results for ${lat}/${lon}`)
     const result = results[0]
-    return extract_details(result)
+    return extractDetails(result)
   } catch (error) {
     console.log(`Could not reverse geocode ${lat}/${lon}: ${error}`)
     return null
   }
 }
 
-function extract_details (result: any) {
+function extractDetails (result: any) {
   const matchLevel = result.MatchLevel
   const ret: Location = {
     lat: result.Location.DisplayPosition.Latitude,

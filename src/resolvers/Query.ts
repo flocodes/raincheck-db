@@ -1,6 +1,6 @@
 import { Context } from 'graphql-yoga/dist/types'
-import { fwd_geocode, rev_geocode } from '../util/here'
-import { set_cookie } from '../util/auth'
+import { fwdGeocode, revGeocode } from '../util/here'
+import { setCookie } from '../util/auth'
 
 export const Query = {
   //
@@ -9,16 +9,16 @@ export const Query = {
 
   // Get info of the logged in user
   async me (parent: any, args: any, context: Context) {
-    const id = context.request.user_id
+    const id = context.request.userId
     console.log(id)
-    set_cookie(context, id)
+    setCookie(context, id)
     return context.prisma.user({ id })
   },
 
   // Get a trip of the logged in user
   // Throw an error when a user tries to read someone else's trips
   async trip (parent: any, args: any, context: Context) {
-    const userId = context.request.user_id
+    const userId = context.request.userId
     const [trip, user] = await Promise.all([
       context.prisma.trip({ id: args.id }),
       context.prisma.trip({ id: args.id }).user()
@@ -26,7 +26,7 @@ export const Query = {
     if (user.id !== userId) {
       throw new Error('Cannot read the trips of other users')
     }
-    set_cookie(context, userId)
+    setCookie(context, userId)
     return trip
   },
 
@@ -36,21 +36,21 @@ export const Query = {
 
   // Perform forward geocoding
   async geocode (parent: any, args: any, context: Context) {
-    const userId = context.request.user_id
+    const userId = context.request.userId
     if (!userId) {
       throw new Error('Must be authenticated to perform geocoding')
     }
-    set_cookie(context, userId)
-    return fwd_geocode(args.query)
+    setCookie(context, userId)
+    return fwdGeocode(args.query)
   },
 
   // Perform reverse geocoding
   async rgeocode (parent: any, args: any, context: Context) {
-    const userId = context.request.user_id
+    const userId = context.request.userId
     if (!userId) {
       throw new Error('Must be authenticated to perform geocoding')
     }
-    set_cookie(context, userId)
-    return rev_geocode(args.lat, args.lon)
+    setCookie(context, userId)
+    return revGeocode(args.lat, args.lon)
   }
 }

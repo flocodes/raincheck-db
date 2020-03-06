@@ -8,7 +8,7 @@ import { Query } from './resolvers/Query'
 import { Mutation } from './resolvers/Mutation'
 import { Trip } from './resolvers/Trip'
 import { User } from './resolvers/User'
-import { get_cookie } from './util/auth'
+import { getCookie } from './util/auth'
 
 const resolvers = {
   Query,
@@ -31,11 +31,10 @@ const server = new GraphQLServer({
 })
 
 // Get the user ID from the 'token' cookie in the request and set it in the request
-// => resolvers have access to the user ID through context.request.user_id
+// => resolvers have access to the user ID through context.request.userId
 server.express.use(cookieParser())
-server.express.use(get_cookie)
+server.express.use(getCookie)
 
-// TODO: Update the token expiration date on every(?) request
 // TODO: Safe options?
 const opts = {
   cors: {
