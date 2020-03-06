@@ -10,7 +10,7 @@
     "prisma-generate": "prisma generate",
     "start": "ts-node src/index.ts",
     "start-dev": "nodemon --watch src -e ts --exec yarn start",
-    "lint": "eslint src/**"
+    "lint": "eslint . --ext ts"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
