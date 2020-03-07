@@ -30,5 +30,5 @@ module.exports = {
       'varsIgnorePattern': '^_',
     }],
   },
-  ignorePatterns: ['src/generated/**']
+  ignorePatterns: ['src/generated/**', 'build/**']
 }

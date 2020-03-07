@@ -18,7 +18,7 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: './schema.graphql',
   resolvers,
   // Need to provide custom context so the response is available for setting cookies
   // => resolvers can set cookies through context.response.cookie()
