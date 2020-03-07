@@ -2,8 +2,9 @@ name: Build
 
 on:
   push:
-    tags:
-      - '*'
+    branches: [ master ]
+#    tags:
+#      - '*'
 
 jobs:
   test:
