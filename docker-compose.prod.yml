@@ -23,7 +23,7 @@ services:
     volumes:
       - mysql:/var/lib/mysql
   backend:
-    image: raincheck-db_backend:latest
+    image: flodocks/raincheck-db:latest
     ports:
       - '4000:4000'
     environment:

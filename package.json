@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "docker-backend": "docker build . -t raincheck-db-backend:latest",
-    "docker-up": "docker-compose -f docker-coompose.prod.yml up -d",
+    "docker-up": "docker-compose -f docker-compose.prod.yml up -d",
     "docker-up-dev": "docker-compose -f docker-compose.dev.yml up -d",
     "prisma-update": "prisma deploy -e .env",
     "prisma-generate": "prisma generate -e .env",
