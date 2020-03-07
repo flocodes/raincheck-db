@@ -15,7 +15,7 @@ jobs:
     - name: Build and publish docker image
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: flodocks/raincheck-db/raincheck-db
+        name: flodocks/raincheck-db
         username: flodocks
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
         repository: flodocks/raincheck-db
