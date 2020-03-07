@@ -13,7 +13,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY ["package.json", "yarn.lock", "schema.graphql", "./"]
-RUN yarn install --frozen-lockfile --production
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 COPY --from=build /app/build ./build
 
 CMD ["yarn", "start"]

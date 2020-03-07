@@ -1,0 +1,20 @@
+name: Build
+
+on:
+  push:
+    tags: *
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo in $GITHUB_WORKSPACE
+      uses: actions/checkout@v2
+    - name: Build and publish docker image
+      uses: jerray/publish-docker-action@master
+      with:
+        username: flocodes
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        repository: flocodes/raincheck-db
+        tags: latest

@@ -1,12 +1,8 @@
 version: '3'
 services:
-  # reachable to other containers at prisma:4466
-  # if ports section is uncommented, reachable at localhost:4466 on host
   prisma:
     image: prismagraphql/prisma:1.34
     restart: always
-    #ports:
-    #  - '4466:4466'
     environment:
       PRISMA_CONFIG: |
         managementApiSecret: $PRISMA_MANAGEMENT_API_SECRET
@@ -18,30 +14,21 @@ services:
             port: 3306
             user: $DB_USER
             password: $DB_PASSWORD
-# Setup for Amazon RDS MySQL instance (host, user, PW in .env)
-# SSL does not work because there is no way to verify the certificate
-#            host: $PRISMA_DB_HOST
-#            port: 3306
-#            database: raincheckdbmysql
-#            user: $PRISMA_DB_USER
-#            password: $PRISMA_DB_PASSWORD
-#            ssl: false
-
+            connectionLimit: 10
   mysql:
     image: mysql:5.7
     restart: always
-    #ports:
-    #  - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: $DB_PASSWORD
     volumes:
       - mysql:/var/lib/mysql
   backend:
-    build: .
+    image: raincheck-db_backend:latest
     ports:
       - '4000:4000'
     environment:
       APP_SECRET: $APP_SECRET
       HERE_API_KEY: $HERE_API_KEY
+      PRISMA_ENDPOINT: http://prisma:4466
 volumes:
   mysql: ~
