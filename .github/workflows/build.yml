@@ -13,9 +13,10 @@ jobs:
     - name: Check out repo in $GITHUB_WORKSPACE
       uses: actions/checkout@v2
     - name: Build and publish docker image
-      uses: jerray/publish-docker-action@master
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        username: flocodes
+        name: flocodes/raincheck-db/raincheck-db
+        username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         repository: flocodes/raincheck-db
