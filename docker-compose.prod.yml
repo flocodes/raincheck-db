@@ -29,6 +29,7 @@ services:
     environment:
       APP_SECRET: $APP_SECRET
       HERE_API_KEY: $HERE_API_KEY
+      FRONTEND_URI: $FRONTEND_URI
       PRISMA_ENDPOINT: http://prisma:4466
 volumes:
   mysql: ~
