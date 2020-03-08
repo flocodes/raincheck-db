@@ -1,13 +1,19 @@
-name: Lint
+name: Lint and build
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'Dockerfile'
+      - '.eslintrc.js'
+      - 'schema.graphql'
+      - 'tsconfig.json'
+      - 'yarn.lock'
 
 jobs:
-  lint:
+  lint_and_build:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo in $GITHUB_WORKSPACE
@@ -30,7 +36,11 @@ jobs:
       run: yarn
     - name: Lint
       run: yarn lint
-#    - name: Test
-#      run: yarn test
-#      env:
-#        CI: true
+    - name: Build and publish docker image
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: flodocks/raincheck-db
+        username: flodocks
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: flodocks/raincheck-db
+        tags: latest
