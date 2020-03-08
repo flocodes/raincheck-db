@@ -8,7 +8,8 @@ import { Query } from './resolvers/Query'
 import { Mutation } from './resolvers/Mutation'
 import { Trip } from './resolvers/Trip'
 import { User } from './resolvers/User'
-import { getCookie } from './util/auth'
+import { getCookie, updateCookie } from './util/auth'
+import { formatError } from 'apollo-errors'
 
 const resolvers = {
   Query,
@@ -32,8 +33,10 @@ const server = new GraphQLServer({
 
 // Get the user ID from the 'token' cookie in the request and set it in the request
 // => resolvers have access to the user ID through context.request.userId
+// Then set it again with updated expiration date
 server.express.use(cookieParser())
 server.express.use(getCookie)
+server.express.use(updateCookie)
 
 // TODO: Safe options?
 const playground: false|string = (process.env.NODE_ENV === 'production') ? false : '/'
@@ -43,6 +46,7 @@ const opts = {
     credentials: true,
     origin: origin
   },
-  playground
+  playground,
+  formatError
 }
 server.start(opts, () => console.log('Server is running on http://localhost:4000'))

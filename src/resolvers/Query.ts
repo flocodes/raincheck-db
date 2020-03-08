@@ -1,6 +1,6 @@
 import { Context } from 'graphql-yoga/dist/types'
 import { fwdGeocode, revGeocode } from '../util/here'
-import { setCookie } from '../util/auth'
+import { NotAuthenticatedError } from '../util/errors'
 
 export const Query = {
   //
@@ -10,8 +10,7 @@ export const Query = {
   // Get info of the logged in user
   async me (parent: any, args: any, context: Context) {
     const id = context.request.userId
-    console.log(id)
-    setCookie(context, id)
+    if (!id) throw new NotAuthenticatedError()
     return context.prisma.user({ id })
   },
 
@@ -23,10 +22,7 @@ export const Query = {
       context.prisma.trip({ id: args.id }),
       context.prisma.trip({ id: args.id }).user()
     ])
-    if (user.id !== userId) {
-      throw new Error('Cannot read the trips of other users')
-    }
-    setCookie(context, userId)
+    if (user.id !== userId) throw new Error('Cannot read the trips of other users')
     return trip
   },
 
@@ -37,20 +33,14 @@ export const Query = {
   // Perform forward geocoding
   async geocode (parent: any, args: any, context: Context) {
     const userId = context.request.userId
-    if (!userId) {
-      throw new Error('Must be authenticated to perform geocoding')
-    }
-    setCookie(context, userId)
+    if (!userId) throw new Error('Must be authenticated to perform geocoding')
     return fwdGeocode(args.query)
   },
 
   // Perform reverse geocoding
   async rgeocode (parent: any, args: any, context: Context) {
     const userId = context.request.userId
-    if (!userId) {
-      throw new Error('Must be authenticated to perform geocoding')
-    }
-    setCookie(context, userId)
+    if (!userId) throw new Error('Must be authenticated to perform geocoding')
     return revGeocode(args.lat, args.lon)
   }
 }
