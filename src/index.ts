@@ -37,10 +37,11 @@ server.express.use(getCookie)
 
 // TODO: Safe options?
 const playground: false|string = (process.env.NODE_ENV === 'production') ? false : '/'
+const origin = (process.env.NODE_ENV === 'production') ? process.env.FRONTEND_URI : ['http://localhost:4000', 'http://localhost:3000']
 const opts = {
   cors: {
     credentials: true,
-    origin: ['http://localhost:4000', 'http://localhost:3000']
+    origin: origin
   },
   playground
 }

@@ -12,7 +12,7 @@
     "lint": "eslint . --ext ts",
     "build": "tsc",
     "start": "node build/index.js",
-    "start-dev": "nodemon --watch src -e ts --exec ts-node src/index.ts"
+    "start-dev": "yarn docker-up-dev && nodemon --watch src -e ts --exec ts-node src/index.ts"
   },
   "dependencies": {
     "axios": "^0.19.2",
