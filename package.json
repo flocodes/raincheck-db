@@ -11,7 +11,7 @@
     "prisma-generate": "prisma generate -e .env",
     "lint": "eslint . --ext ts",
     "build": "tsc",
-    "start": "yarn docker-up-dev && node build/index.js",
+    "start": "node build/index.js",
     "start-dev": "yarn docker-up-dev && nodemon --watch src -e ts --exec ts-node src/index.ts"
   },
   "dependencies": {

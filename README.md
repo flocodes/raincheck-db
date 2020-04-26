@@ -33,7 +33,7 @@ This is required for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CO
 ### Running raincheck-db
 
 * To run a development build with hot reloads, run `yarn run start-dev`
-* To build to Javascript and run the result, first run `yarn run build`, then `yarn run start`
+* To build to Javascript and run the result, run `yarn run build`, `yarn docker-up-dev`, and `yarn run start`.
 * To build the backend Docker image locally, run `yarn run docker-backend`
 * To test the deployment, run `yarn run docker-up`
 
