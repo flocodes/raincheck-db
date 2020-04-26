@@ -42,6 +42,8 @@ volumes:
   mysql: ~
 networks:
   webapp:
+    name: "raincheck-webapp"
     driver: "bridge"
   notify:
+    name: "raincheck-notify"
     driver: "bridge"
